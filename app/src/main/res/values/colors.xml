@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="firemind_background">#09111F</color>
+    <color name="firemind_surface">#122238</color>
+    <color name="firemind_surface_alt">#1B3150</color>
+    <color name="firemind_accent">#55D6BE</color>
+    <color name="firemind_accent_warm">#FFB86B</color>
+    <color name="firemind_text">#F5F8FC</color>
+    <color name="firemind_muted">#A9B8CA</color>
+    <color name="firemind_focus">#FFFFFF</color>
+</resources>
