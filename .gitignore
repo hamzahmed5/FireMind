@@ -11,6 +11,8 @@
 *.log
 .env
 .env.*
+!.env.example
+!backend/.env.example
 credentials.json
 *.jks
 *.keystore

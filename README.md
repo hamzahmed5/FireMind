@@ -4,15 +4,15 @@ FireMind is an AI-ready viewing companion designed for Amazon Fire TV. It helps 
 
 ## Current implementation
 
-The first vertical slice is implemented in native Android/Kotlin for Fire OS. It includes a TV-first home screen, quick mood prompts, natural-language request input, deterministic recommendation ranking, details, explanation text, spoiler-safe summaries, local watchlist persistence, an About screen, loading-safe synchronous local fallback behavior, and explicit D-pad focus styling.
+The first vertical slice is implemented in native Android/Kotlin for Fire OS. It includes a TV-first home screen, quick mood prompts, natural-language request input, deterministic recommendation ranking, details, explanation text, spoiler-safe summaries, local watchlist persistence, an About screen, local fallback behavior, and explicit D-pad focus styling.
 
-The backend contract is implemented as a dependency-free Python service under `backend/`. The Android app currently uses the same local catalog and ranking logic so the core demo remains reliable without cloud credentials. Amazon Bedrock integration is intentionally not claimed until AWS credentials and a deployed HTTPS endpoint are available.
+The backend under `backend/` exposes the stable API contract. It uses the same curated catalog as the app and can optionally ask Amazon Bedrock to rank and explain only known candidates. If the SDK, credentials, model, network, or response validation fails, the backend automatically returns the deterministic local result instead.
 
 ## Requirements
 
 - JDK 21 with `javac`.
 - Android SDK Platform 35 and Build Tools 35.0.0.
-- Gradle 9.7.1 or the project wrapper once generated.
+- The project Gradle wrapper.
 - A Fire TV device with developer access, or a compatible Android TV environment for UI validation.
 
 The prepared sandbox toolkit is documented in `/home/ubuntu/firemind-tooling/FIREMIND_TOOLING.md`.
@@ -23,7 +23,7 @@ The prepared sandbox toolkit is documented in `/home/ubuntu/firemind-tooling/FIR
 source /home/ubuntu/firemind-tooling/env.sh
 export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
 cd firemind
-gradle clean assembleDebug
+./gradlew clean assembleDebug
 ```
 
 The verified debug APK is generated at `app/build/outputs/apk/debug/app-debug.apk`.
@@ -41,21 +41,40 @@ adb logcat --pid="$(adb shell pidof -s com.firemind)"
 
 The device workflow requires a real Fire TV or compatible target. No Fire TV simulator is present in this sandbox.
 
-## Run the backend
+## Run the backend locally
 
 ```bash
 cd backend
 python3 server.py
 ```
 
-See [`docs/API_SPEC.md`](docs/API_SPEC.md) for endpoint contracts and curl examples. The backend does not require credentials and does not claim an AWS runtime integration.
+The default server is `http://127.0.0.1:8080`. See [`docs/API_SPEC.md`](docs/API_SPEC.md) for endpoint contracts and curl examples.
+
+## Optional Amazon Bedrock mode
+
+Local mode requires no credentials. To enable the guarded Bedrock adapter, install the optional dependency and provide credentials through an AWS CLI profile, IAM role, or runtime environment. Do not put credentials in `.env` or source control.
+
+```bash
+cd backend
+python3 -m venv .venv
+. .venv/bin/activate
+pip install -r requirements.txt
+export AWS_REGION=us-east-1
+export FIREMIND_BEDROCK_MODEL_ID=<approved-model-id>
+python3 server.py
+```
+
+The adapter sends only the user request and known catalog candidates. It validates returned `catalogId` values against the local catalog before returning results. `GET /api/health` reports whether Bedrock mode is enabled. A deployed Fire TV demo must use an HTTPS backend endpoint; do not expose AWS credentials in the APK.
 
 ## Project structure
 
 ```text
 app/                 Native Android/Kotlin Fire TV app
-backend/             Dependency-free local API and curated catalog
+backend/             Dependency-free local API and optional Bedrock adapter
 docs/API_SPEC.md     API contract
+docs/ARCHITECTURE.md Architecture decisions
+docs/TESTING.md      Verified and hardware-dependent checks
+docs/DEMO_SCRIPT.md  Demo sequence
 data/                Reserved for documented catalog exports
 assets/              Reserved for legally usable visual assets
 ```
@@ -66,7 +85,7 @@ Verify every interactive element with a remote or keyboard D-pad: UP, DOWN, LEFT
 
 ## Security
 
-No API keys are stored in the app. Do not commit `.env`, `local.properties`, credentials, keystores, or cloud credentials. A future cloud adapter must keep provider credentials on the backend and use HTTPS from the Fire TV app.
+No API keys are stored in the app. Do not commit `.env`, `local.properties`, credentials, keystores, or cloud credentials. The optional backend adapter fails closed to local mode when Bedrock is unavailable.
 
 ## License
 

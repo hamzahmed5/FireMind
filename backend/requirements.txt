@@ -1,0 +1,2 @@
+# Optional: only needed when FIREMIND_BEDROCK_MODEL_ID is configured.
+boto3>=1.35,<2
