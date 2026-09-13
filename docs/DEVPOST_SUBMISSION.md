@@ -50,3 +50,7 @@ Connect the backend to a deployed HTTPS endpoint, validate the APK on Fire TV ha
 ## Current limitation disclosure
 
 The current sandbox verification proves the Android build, APK metadata, backend endpoints, fallback behavior, and security checks. It does not claim physical Fire TV installation, real remote testing, public GitHub publication, or live Bedrock execution until those external steps are completed.
+
+## Published links
+
+The public source repository is available at https://github.com/hamzahmed5/firemind. The APK and evidence video are available in the v0.1.0 release at https://github.com/hamzahmed5/firemind/releases/tag/v0.1.0.
