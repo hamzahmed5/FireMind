@@ -1,16 +1,16 @@
 # Media Handoff
 
-No screenshots or demo video are included in this bundle because no physical Fire TV or booted Android TV runtime was available. This is intentional: generated mockups would not prove the APK’s actual UI, focus behavior, or device performance.
+Runtime media has now been captured from the FireMind APK installed on an Android TV 10 x86 emulator using software CPU emulation. The media proves the app renders at 1920×1080, shows the Home, Recommendations, Details, and Watchlist states, and persists Sing Street after the Add to Watchlist action.
 
-The prepared capture sequence is documented in [`DEMO_SCRIPT.md`](DEMO_SCRIPT.md). The required device checks are listed in [`RELEASE_CHECKLIST.md`](RELEASE_CHECKLIST.md). The technical reason capture was blocked is documented in [`CAPTURE_BLOCKER.md`](CAPTURE_BLOCKER.md).
+The capture is compatible Android TV validation, not physical Fire TV hardware validation. A physical Fire TV is still required for final Fire OS overscan, hardware performance, and real-remote verification.
 
-Once a target is available, save media under `media/` using these names:
-
-| File | Required content |
+| File | Content |
 |---|---|
-| `home.png` | Home screen with Ask FireMind and mood row. |
-| `assistant.png` | Assistant prompt and quick chips. |
-| `results.png` | Grounded recommendation cards. |
-| `details.png` | Explanation, metadata, and spoiler-safe summary. |
-| `watchlist.png` | Saved title visible in Watchlist. |
-| `firemind-demo.mp4` | Complete flow, ideally under three minutes. |
+| `home-after-wait.png` | Rendered Home screen after emulator startup settles. |
+| `assistant.png` | Recommendations screen after the Funny quick mood. |
+| `details.png` | Sing Street details with Add to Watchlist state. |
+| `watchlist-final-verified.png` | Live Watchlist page with Sing Street, verified by UI hierarchy. |
+| `firemind-demo.mp4` | Real screen recording of Home → Recommendations → Details. |
+| `firemind-clean-demo-final.mp4` | Real clean-state screen recording with Details and saved-state transition. |
+
+The final combined evidence video is assembled from the real runtime recording plus the real captured Watchlist frame so that the final media clearly includes the saved-title state. It is labeled as evidence media rather than a claim of physical Fire TV hardware capture.

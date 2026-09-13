@@ -1,0 +1,1 @@
+The recording does not visibly reach the FireMind Watchlist page. Throughout the entire video, the screen remains on the FireMind home page, displaying options for "Quick Moods" and a "Recommended for You" section where the title *Sing Street* is listed, but no navigation to the Watchlist occurs.

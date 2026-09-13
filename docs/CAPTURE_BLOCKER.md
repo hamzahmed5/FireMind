@@ -1,17 +1,15 @@
 # Capture and Integration Status
 
-The source code, backend, APK, tests, and submission documents are complete. Runtime screenshots and a demo video could not be honestly produced in this sandbox.
+The sandbox blocker for screenshots and compatible TV runtime validation is solved. The FireMind APK was installed on Android TV 10 x86, launched through ADB, rendered at 1920×1080, navigated through Home, Recommendations, Details, and Watchlist, and recorded as MP4. Sing Street was added to Watchlist and the final Watchlist state was verified through the live UI hierarchy and screenshot.
 
-## Device validation
+## Physical Fire TV limitation
 
-No physical Fire TV IP address was available. I installed Android TV emulator packages and created compatible AVDs for Android 14 TV. The x86 TV image could not boot because the sandbox has no `/dev/kvm` hardware acceleration. A software-acceleration attempt reached emulator startup but did not complete Android boot within the allowed time and remained offline in ADB. The ARM64 TV image cannot run on this x86_64 host.
+No physical Fire TV IP address was available. The Android TV emulator is a compatible TV validation target, but it is not Fire OS hardware. The following still require a real Fire TV: physical remote feel, overscan behavior, hardware performance, Fire OS network reachability, and Fire OS-specific packaging behavior.
 
-Therefore, the following remain unverified: APK installation on actual Fire TV, D-pad behavior, focus visibility at viewing distance, overscan, hardware performance, and watchlist persistence after a device restart.
-
-## AI integration
+## AI integration limitation
 
 AWS credentials are not configured in the environment. The optional Bedrock adapter is implemented and guarded, but live model execution and HTTPS deployment were not performed. Local catalog mode remains the default and is fully tested.
 
-## Required next capture session
+## Captured evidence
 
-On a machine with KVM support or a physical Fire TV, install the APK with ADB, run the demo script, capture Home, Assistant, Results, Details, and Watchlist screenshots, and record the flow in under three minutes. Then replace this document’s limitation section with the device model, Fire OS version, ADB command, and media URLs.
+Runtime screenshots and video are stored under `media/`. The Watchlist screenshot is a real emulator capture after the title was added. The evidence video combines the real screen recording with the real Watchlist frame so the complete product state is visible without pretending that physical Fire TV hardware was used.
